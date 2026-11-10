@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Registro de gastos diarios que funciona sin conexión.">
+  <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161615" media="(prefers-color-scheme: dark)">
+  <title>Mi Billetera Lite</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="preload" href="fonts/plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1 class="topbar__brand">Mi Billetera <span>Lite</span></h1>
+    <p class="topbar__status" id="offline" hidden>Sin conexión · guardado local</p>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel summary" aria-labelledby="summary-title">
+        <h2 class="summary__label" id="summary-title">Total gastado</h2>
+        <p class="summary__total" id="total">$0.00</p>
+        <p class="summary__count" id="count"></p>
+        <div class="breakdown" id="breakdown" hidden>
+          <div class="breakdown__bar" id="breakdown-bar" role="img"></div>
+          <ul class="breakdown__list" id="breakdown-list"></ul>
+        </div>
+      </section>
+
+      <form class="panel form" id="expense-form" autocomplete="off">
+        <h2 class="panel__title">Nuevo gasto</h2>
+
+        <label class="field">
+          <span class="field__label">Concepto</span>
+          <input class="input" name="concept" type="text" maxlength="60" pattern=".*\S.*" placeholder="Ej. Café" required>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Monto</span>
+          <span class="input input--amount">
+            <span class="input__prefix" aria-hidden="true">$</span>
+            <input name="amount" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0.00" required>
+          </span>
+        </label>
+
+        <fieldset class="field">
+          <legend class="field__label">Categoría</legend>
+          <div class="chips chips--wrap" id="category-picker"></div>
+        </fieldset>
+
+        <button class="button" type="submit">Guardar gasto</button>
+      </form>
+    </aside>
+
+    <main class="history" aria-labelledby="history-title">
+      <div class="history__head">
+        <h2 class="history__title" id="history-title">Historial</h2>
+        <p class="history__summary" id="history-summary"></p>
+      </div>
+
+      <div class="history__tools">
+        <input class="input input--search" id="search" type="search" placeholder="Buscar por concepto" aria-label="Buscar por concepto">
+        <div class="chips chips--scroll" id="category-filter" role="radiogroup" aria-label="Filtrar por categoría"></div>
+      </div>
+
+      <p class="history__empty" id="empty" hidden></p>
+      <div id="history"></div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden>
+    <span class="toast__message"></span>
+    <button class="toast__action" type="button">Deshacer</button>
+  </div>
+
+  <template id="expense-template">
+    <li class="expense">
+      <p class="expense__concept"></p>
+      <p class="expense__amount"></p>
+      <p class="expense__meta"><span class="dot"></span><span class="expense__details"></span></p>
+      <button class="expense__delete" type="button">Eliminar</button>
+    </li>
+  </template>
+</body>
+</html>
