@@ -11,7 +11,7 @@ const startOfDay = timestamp => new Date(timestamp).setHours(0, 0, 0, 0);
 const capitalize = text => text.charAt(0).toUpperCase() + text.slice(1);
 
 export const formatMoney = cents => money.format(cents / 100);
-export const formatPercent = ratio => percent.format(ratio);
+export const formatPercent = ratio => (ratio > 0 && ratio < 0.01 ? '<1%' : percent.format(ratio));
 export const formatTime = timestamp => time.format(timestamp);
 
 export const formatCount = count => (count === 1 ? '1 gasto' : `${count} gastos`);

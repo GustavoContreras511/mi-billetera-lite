@@ -1,4 +1,4 @@
-const CACHE = 'billetera-v2';
+const CACHE = 'billetera-v3';
 
 const APP_SHELL = [
   './',
